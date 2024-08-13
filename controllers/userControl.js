@@ -15,7 +15,7 @@ const registerUser = async (req, res) => {
     const token = await newUser.generateAuthToken();
     await newUser.save();
 
-    res.status(201).json({ message: 'success', user , token });
+    res.status(201).json({ message: 'success', User , token });
   } catch (error) {
     console.log('error in register', error);
     res.status(400).json({ error: error.message });
@@ -65,9 +65,20 @@ const loginUser = async(req,res)=>{
     }
 }
 
+const logoutUser = (req,res)=>{
+    try {
+        res.cookie("jwt", '', {maxAge:0});
+        res.status(200).json({message:"Logout SuccessFully"})
+    } catch (error) {
+        console.log("error In logging out", error)
+        res.status(500).json({error:"internal Server Error"})
+    }
+}
+
 
 module.exports = {
     registerUser,
     fetchUserById,
-    loginUser
+    loginUser,
+    logoutUser
 }

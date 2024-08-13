@@ -45,7 +45,7 @@ userSchema.methods.generateAuthToken = function () {
   try {
     let token = jwt.sign(
       { id: this._id, email: this.email },
-      'shhhhh',
+      process.env.JWT_SECRET,
       {
         expiresIn: '24h',
       }
